@@ -127,7 +127,9 @@ export function RegionalBoard({ overview }: { overview: RegionalOverview }) {
                                   waitSeverity(p.lanes.pedestrian.east?.predicted ?? null),
                                 )}`}
                               >
-                                pred {p.lanes.pedestrian.east?.predicted ?? "—"}m
+                                {p.lanes.pedestrian.east?.predicted == null
+                                  ? "pred —"
+                                  : `pred ${p.lanes.pedestrian.east.predicted}m`}
                               </span>
                             </div>
                             <div className="flex items-baseline justify-between gap-2 font-mono">
@@ -144,7 +146,9 @@ export function RegionalBoard({ overview }: { overview: RegionalOverview }) {
                                   waitSeverity(p.lanes.pedestrian.west?.predicted ?? null),
                                 )}`}
                               >
-                                pred {p.lanes.pedestrian.west?.predicted ?? "—"}m
+                                {p.lanes.pedestrian.west?.predicted == null
+                                  ? "pred —"
+                                  : `pred ${p.lanes.pedestrian.west.predicted}m`}
                               </span>
                             </div>
                           </div>

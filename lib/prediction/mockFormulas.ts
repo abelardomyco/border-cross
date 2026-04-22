@@ -10,7 +10,11 @@ export function mockPredictTrueWait(
 ): TrueWaitPredictionOutput {
   const base =
     input.officialMinutes ??
-    (input.laneType === "pedestrian" ? 35 : input.laneType === "sentri_ready" ? 12 : 55);
+    (input.laneType === "pedestrian" || input.laneType === "pedestrian_east" || input.laneType === "pedwest"
+      ? 35
+      : input.laneType === "sentri_ready"
+        ? 12
+        : 55);
 
   const lagInflation = Math.min(22, input.sourceLagMinutes * 0.35);
   const trendInflation = Math.max(-8, input.trendSlope * 0.6);
@@ -20,7 +24,8 @@ export function mockPredictTrueWait(
 
   let laneFactor = 1;
   if (input.laneType === "sentri_ready") laneFactor = 0.55;
-  if (input.laneType === "pedestrian") laneFactor = 0.85;
+  if (input.laneType === "pedestrian" || input.laneType === "pedestrian_east" || input.laneType === "pedwest")
+    laneFactor = 0.85;
   if (input.laneType === "commercial") laneFactor = 1.25;
 
   const predicted = Math.round(
