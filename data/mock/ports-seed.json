@@ -34,7 +34,7 @@
         },
         {
           "laneType": "pedestrian",
-          "label": "PedWest / east pedestrian",
+          "label": "PedWest (pedestrians) + East Ped",
           "official": 38,
           "open": 9,
           "total": 14

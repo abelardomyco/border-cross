@@ -1,6 +1,7 @@
 import type { LaneWaitRow } from "@/lib/types/domain";
 import { DenseCard } from "./DenseCard";
 import { LiveMetaStrip } from "./LiveMetaStrip";
+import { waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
 
 function laneTag(l: LaneWaitRow["laneType"]) {
   if (l === "car") return "CAR";
@@ -21,7 +22,7 @@ export function OfficialWaitCard({ waits }: { waits: LaneWaitRow[] }) {
                   <span className="rounded bg-zinc-800 px-1 py-0.5 text-[9px] text-cyan-200">{laneTag(w.laneType)}</span>
                   <span className="text-[11px] text-zinc-300">{w.label}</span>
                 </div>
-                <div className="mt-1 font-mono text-lg font-semibold text-zinc-50">
+                <div className={`mt-1 font-mono text-lg font-semibold ${waitSeverityTextClass(waitSeverity(w.officialMinutes))}`}>
                   {w.officialMinutes == null ? "—" : `${w.officialMinutes}m`}
                 </div>
               </div>

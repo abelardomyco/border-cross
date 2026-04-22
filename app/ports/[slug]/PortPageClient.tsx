@@ -5,14 +5,26 @@ import { RefreshBadge } from "@/components/shell/RefreshBadge";
 import { PortModuleGrid } from "@/components/ports/PortModuleGrid";
 import { useDashboardRefresh } from "@/hooks/useDashboardRefresh";
 import type { PortSnapshot } from "@/lib/types/domain";
+import { lightingPaletteForTimeZone } from "@/lib/ui/portLighting";
+
+const PORT_TIMEZONE: Record<string, string> = {
+  "san-ysidro": "America/Los_Angeles",
+  "otay-mesa": "America/Los_Angeles",
+  tecate: "America/Los_Angeles",
+  "calexico-west": "America/Los_Angeles",
+  "calexico-east": "America/Los_Angeles",
+};
 
 export function PortPageClient({ slug }: { slug: string }) {
   const { data, error, loading, lastFetchAt, refetch } = useDashboardRefresh<PortSnapshot>(`/api/ports/${slug}`, 30_000);
+  const tz = PORT_TIMEZONE[slug] ?? "America/Los_Angeles";
+  const light = lightingPaletteForTimeZone(tz);
 
   return (
     <AppShell
       title={data?.name ?? "Port"}
       subtitle={data ? `${data.corridor} · layout ${data.layout.variant}` : "Loading port modules…"}
+      headerTone={{ ...light, phase: light.phase }}
       right={<RefreshBadge lastFetchAt={lastFetchAt} intervalSec={30} error={error} />}
     >
       {loading && !data ? (

@@ -1,5 +1,14 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { AtmosphereOverlay } from "@/components/ui/AtmosphereOverlay";
+import type { LightingPhase } from "@/lib/ui/portLighting";
+
+type HeaderTone = {
+  from: string;
+  to: string;
+  accent: string;
+  phase?: LightingPhase;
+};
 
 const nav = [
   { href: "/", label: "Regional" },
@@ -17,20 +26,37 @@ export function AppShell({
   title,
   subtitle,
   right,
+  headerTone,
   children,
 }: {
   title: string;
   subtitle?: string;
   right?: ReactNode;
+  headerTone?: HeaderTone;
   children: ReactNode;
 }) {
+  const headerStyle: React.CSSProperties | undefined = headerTone
+    ? {
+        background: `linear-gradient(180deg, ${headerTone.from} 0%, ${headerTone.to} 100%)`,
+        borderColor: `${headerTone.accent}55`,
+      }
+    : undefined;
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-40 border-b border-border bg-surface-1/95 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-surface-1/95 backdrop-blur" style={headerStyle}>
+        {headerTone?.phase ? (
+          <div className="relative">
+            <AtmosphereOverlay phase={headerTone.phase} accent={headerTone.accent} />
+          </div>
+        ) : null}
         <div className="mx-auto flex max-w-[1600px] flex-col gap-2 px-3 py-2 sm:px-4">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
-              <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ops-teal/90">
+              <div
+                className="text-[10px] font-mono uppercase tracking-[0.2em]"
+                style={{ color: headerTone?.accent ?? "var(--accent-teal)" }}
+              >
                 Border Ops Dashboard
               </div>
               <h1 className="text-sm font-semibold leading-tight text-zinc-50 sm:text-base">{title}</h1>

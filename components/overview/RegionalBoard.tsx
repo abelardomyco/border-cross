@@ -5,10 +5,21 @@ import type { LiveOutputMeta, RegionalOverview } from "@/lib/types/domain";
 import { DenseCard } from "@/components/modules/DenseCard";
 import { LiveMetaStrip } from "@/components/modules/LiveMetaStrip";
 import { AlertsPanel } from "@/components/modules/AlertsPanel";
+import { lightingPaletteForTimeZone, waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
+import { AtmosphereOverlay } from "@/components/ui/AtmosphereOverlay";
 
 function fmtMin(n: number | null) {
   return n == null ? "—" : `${n}m`;
 }
+
+// SD–TJ initial ports are all Pacific time; this map makes the behavior explicit and is extendable.
+const PORT_TIMEZONE: Record<string, string> = {
+  "san-ysidro": "America/Los_Angeles",
+  "otay-mesa": "America/Los_Angeles",
+  tecate: "America/Los_Angeles",
+  "calexico-west": "America/Los_Angeles",
+  "calexico-east": "America/Los_Angeles",
+};
 
 function LaneCell({
   label,
@@ -21,13 +32,16 @@ function LaneCell({
   predicted: number;
   tone: "general" | "sentri" | "ped";
 }) {
-  const toneClass =
-    tone === "sentri" ? "text-emerald-200" : tone === "ped" ? "text-amber-200" : "text-zinc-100";
+  const sev = waitSeverity(official);
+  const officialClass = waitSeverityTextClass(sev);
+  const predictedClass = waitSeverityTextClass(waitSeverity(predicted));
+  const labelClass =
+    tone === "sentri" ? "text-emerald-300/70" : tone === "ped" ? "text-amber-300/70" : "text-zinc-500";
   return (
     <div className="px-1.5 py-1">
-      <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-zinc-600">{label}</div>
-      <div className={`mt-1 font-mono text-[18px] font-semibold leading-none ${toneClass}`}>{fmtMin(official)}</div>
-      <div className="mt-0.5 font-mono text-[10px] text-zinc-600">pred {predicted}m</div>
+      <div className={`text-[9px] font-mono uppercase tracking-[0.18em] ${labelClass}`}>{label}</div>
+      <div className={`mt-1 font-mono text-[18px] font-semibold leading-none ${officialClass}`}>{fmtMin(official)}</div>
+      <div className={`mt-0.5 font-mono text-[10px] ${predictedClass}`}>pred {predicted}m</div>
     </div>
   );
 }
@@ -51,16 +65,28 @@ export function RegionalBoard({ overview }: { overview: RegionalOverview }) {
                 { id: "rollup", kind: "model_blend", label: "Regional rollup (mock)", observedAt: overview.generatedAt },
               ],
             };
+            const tz = PORT_TIMEZONE[p.slug] ?? "America/Los_Angeles";
+            const light = lightingPaletteForTimeZone(tz);
             return (
               <Link
                 key={p.slug}
                 href={`/ports/${p.slug}`}
-                className="block rounded-md border border-border bg-surface-2/40 p-3 shadow-sm shadow-black/30 hover:border-ops-teal/40"
+                className="relative block overflow-hidden rounded-md border border-border p-3 shadow-sm shadow-black/30"
+                style={{
+                  background: `linear-gradient(180deg, ${light.from} 0%, ${light.to} 100%)`,
+                  borderColor: `${light.accent}55`,
+                }}
               >
+                <AtmosphereOverlay phase={light.phase} accent={light.accent} />
                 <div className="flex items-start justify-between gap-2">
                   <div>
-                    <div className="text-[12px] font-semibold text-zinc-100">{p.name}</div>
-                    <div className="mt-2 grid grid-cols-3 divide-x divide-border rounded-md bg-surface-1/30">
+                    <div className="flex items-baseline justify-between gap-3">
+                      <div className="text-[12px] font-semibold text-zinc-100">{p.name}</div>
+                      <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-zinc-400">
+                        {light.conditions}
+                      </div>
+                    </div>
+                    <div className="mt-2 grid grid-cols-3 divide-x rounded-md bg-black/20" style={{ borderColor: `${light.accent}22` }}>
                       <LaneCell
                         label="General"
                         official={p.lanes.general.official}
@@ -97,7 +123,9 @@ export function RegionalBoard({ overview }: { overview: RegionalOverview }) {
                       )}
                     </div>
                   </div>
-                  <div className="text-[10px] font-mono text-ops-teal">→</div>
+                  <div className="text-[10px] font-mono" style={{ color: light.accent }}>
+                    →
+                  </div>
                 </div>
                 <div className="mt-2">
                   <LiveMetaStrip meta={meta} dense />

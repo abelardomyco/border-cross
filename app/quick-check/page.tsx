@@ -7,6 +7,7 @@ import { RefreshBadge } from "@/components/shell/RefreshBadge";
 import { LiveMetaStrip } from "@/components/modules/LiveMetaStrip";
 import { useDashboardRefresh } from "@/hooks/useDashboardRefresh";
 import type { PortSnapshot } from "@/lib/types/domain";
+import { waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
 
 const DEFAULT_SLUG = "san-ysidro";
 
@@ -23,12 +24,14 @@ function LaneRow({
   official: number | null | undefined;
   predicted: number | null | undefined;
 }) {
+  const officialClass = waitSeverityTextClass(waitSeverity(official));
+  const predictedClass = waitSeverityTextClass(waitSeverity(predicted ?? null));
   return (
     <div className="grid grid-cols-[1fr_auto] items-end gap-3 border-t border-zinc-900/70 pt-2 first:border-t-0 first:pt-0">
       <div className="text-[11px] text-zinc-400">{label}</div>
       <div className="flex items-baseline gap-2 font-mono">
-        <div className="text-[22px] font-semibold text-zinc-50">{fmtMin(official)}</div>
-        <div className="text-[11px] text-amber-200">{predicted == null ? "pred —" : `pred ${predicted}m`}</div>
+        <div className={`text-[22px] font-semibold ${officialClass}`}>{fmtMin(official)}</div>
+        <div className={`text-[11px] ${predictedClass}`}>{predicted == null ? "pred —" : `pred ${predicted}m`}</div>
       </div>
     </div>
   );
