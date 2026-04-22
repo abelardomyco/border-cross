@@ -108,12 +108,47 @@ export function RegionalBoard({ overview }: { overview: RegionalOverview }) {
                         </div>
                       )}
                       {p.lanes.pedestrian ? (
-                        <LaneCell
-                          label="Pedestrian"
-                          official={p.lanes.pedestrian.official}
-                          predicted={p.lanes.pedestrian.predicted}
-                          tone="ped"
-                        />
+                        <div className="px-1.5 py-1">
+                          <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-amber-300/70">
+                            Pedestrian
+                          </div>
+                          <div className="mt-1 space-y-1">
+                            <div className="flex items-baseline justify-between gap-2 font-mono">
+                              <span className="text-[10px] text-zinc-500">East</span>
+                              <span
+                                className={`text-[18px] font-semibold leading-none ${waitSeverityTextClass(
+                                  waitSeverity(p.lanes.pedestrian.east?.official),
+                                )}`}
+                              >
+                                {fmtMin(p.lanes.pedestrian.east?.official ?? null)}
+                              </span>
+                              <span
+                                className={`text-[10px] ${waitSeverityTextClass(
+                                  waitSeverity(p.lanes.pedestrian.east?.predicted ?? null),
+                                )}`}
+                              >
+                                pred {p.lanes.pedestrian.east?.predicted ?? "—"}m
+                              </span>
+                            </div>
+                            <div className="flex items-baseline justify-between gap-2 font-mono">
+                              <span className="text-[10px] text-zinc-500">West</span>
+                              <span
+                                className={`text-[18px] font-semibold leading-none ${waitSeverityTextClass(
+                                  waitSeverity(p.lanes.pedestrian.west?.official),
+                                )}`}
+                              >
+                                {fmtMin(p.lanes.pedestrian.west?.official ?? null)}
+                              </span>
+                              <span
+                                className={`text-[10px] ${waitSeverityTextClass(
+                                  waitSeverity(p.lanes.pedestrian.west?.predicted ?? null),
+                                )}`}
+                              >
+                                pred {p.lanes.pedestrian.west?.predicted ?? "—"}m
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                       ) : (
                         <div className="px-1.5 py-1">
                           <div className="text-[9px] font-mono uppercase tracking-[0.18em] text-zinc-700">Pedestrian</div>

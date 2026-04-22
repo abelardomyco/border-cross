@@ -5,7 +5,8 @@ import { waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
 
 function laneTag(l: LaneWaitRow["laneType"]) {
   if (l === "car") return "CAR";
-  if (l === "pedestrian") return "PED";
+  if (l === "pedestrian" || l === "pedestrian_east") return "PED-E";
+  if (l === "pedwest") return "PED-W";
   if (l === "sentri_ready") return "SENTRI";
   return "COMM";
 }
@@ -40,7 +41,7 @@ export function PredictedWaitCard({ waits }: { waits: LaneWaitRow[] }) {
                     {delta == null ? (
                       <div className="text-[10px] text-zinc-500">no official baseline</div>
                     ) : (
-                      <div className={`text-[10px] font-mono ${delta > 0 ? "text-rose-300" : "text-emerald-300"}`}>
+                      <div className={`text-[10px] font-mono ${delta > 0 ? "text-rose-300" : "text-green-400"}`}>
                         {delta > 0 ? `+${delta}m vs official` : `${delta}m vs official`}
                       </div>
                     )}

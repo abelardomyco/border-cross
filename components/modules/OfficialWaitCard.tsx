@@ -5,7 +5,8 @@ import { waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
 
 function laneTag(l: LaneWaitRow["laneType"]) {
   if (l === "car") return "CAR";
-  if (l === "pedestrian") return "PED";
+  if (l === "pedestrian" || l === "pedestrian_east") return "PED-E";
+  if (l === "pedwest") return "PED-W";
   if (l === "sentri_ready") return "SENTRI";
   return "COMM";
 }

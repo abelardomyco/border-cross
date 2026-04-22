@@ -22,7 +22,7 @@
           "ads_rail",
           "ads_footer"
         ],
-        "laneTypes": ["car", "pedestrian", "sentri_ready"]
+        "laneTypes": ["car", "pedestrian_east", "pedwest", "sentri_ready"]
       },
       "baseWaits": [
         {
@@ -33,11 +33,18 @@
           "total": 32
         },
         {
-          "laneType": "pedestrian",
-          "label": "PedWest (pedestrians) + East Ped",
-          "official": 38,
-          "open": 9,
-          "total": 14
+          "laneType": "pedestrian_east",
+          "label": "East Ped (pedestrians)",
+          "official": 42,
+          "open": 6,
+          "total": 10
+        },
+        {
+          "laneType": "pedwest",
+          "label": "PedWest (pedestrians)",
+          "official": 28,
+          "open": 7,
+          "total": 12
         },
         {
           "laneType": "sentri_ready",
@@ -51,9 +58,10 @@
       "trendPed": [30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 39, 38],
       "cameras": [
         { "id": "sys-n", "title": "Approach — I-5 north stitch", "laneHint": "car" },
-        { "id": "pedwest", "title": "PedWest canopy density", "laneHint": "pedestrian" }
+        { "id": "pedwest", "title": "PedWest canopy density", "laneHint": "pedwest" },
+        { "id": "pedeast", "title": "East Ped canopy density", "laneHint": "pedestrian_east" }
       ],
-      "queuePressure": { "car": 78, "pedestrian": 62, "sentri_ready": 34 },
+      "queuePressure": { "car": 78, "pedestrian_east": 66, "pedwest": 54, "sentri_ready": 34 },
       "approach": [
         { "id": "i5-sd", "name": "I-5 (San Ysidro village)", "congestion": 72, "delay": 14 },
         { "id": "camino-real", "name": "Camino de la Plaza weave", "congestion": 58, "delay": 7 }

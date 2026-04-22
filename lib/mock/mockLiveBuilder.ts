@@ -307,7 +307,10 @@ export function buildRegionalOverview(): RegionalOverview {
     const snap = buildPortSnapshot(p.slug)!;
     const general = snap.waits.find((w) => w.laneType === "car");
     const sentri = snap.waits.find((w) => w.laneType === "sentri_ready");
-    const ped = snap.waits.find((w) => w.laneType === "pedestrian");
+    const pedEast =
+      snap.waits.find((w) => w.laneType === "pedestrian_east") ??
+      snap.waits.find((w) => w.laneType === "pedestrian");
+    const pedWest = snap.waits.find((w) => w.laneType === "pedwest");
     return {
       slug: p.slug,
       name: p.name,
@@ -319,7 +322,10 @@ export function buildRegionalOverview(): RegionalOverview {
         sentri_ready: sentri
           ? { official: sentri.officialMinutes ?? null, predicted: sentri.predictedTrueMinutes }
           : null,
-        pedestrian: ped ? { official: ped.officialMinutes ?? null, predicted: ped.predictedTrueMinutes } : null,
+        pedestrian: {
+          east: pedEast ? { official: pedEast.officialMinutes ?? null, predicted: pedEast.predictedTrueMinutes } : null,
+          west: pedWest ? { official: pedWest.officialMinutes ?? null, predicted: pedWest.predictedTrueMinutes } : null,
+        },
       },
       freshness: general?.live.freshness ?? "unknown",
       confidence: general?.live.confidence ?? 0,

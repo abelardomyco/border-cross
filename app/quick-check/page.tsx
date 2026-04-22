@@ -43,7 +43,10 @@ export default function QuickCheckPage() {
   const { data, error, loading, lastFetchAt, refetch } = useDashboardRefresh<PortSnapshot>(url, 30_000);
 
   const car = data?.waits.find((w) => w.laneType === "car");
-  const ped = data?.waits.find((w) => w.laneType === "pedestrian");
+  const pedEast =
+    data?.waits.find((w) => w.laneType === "pedestrian_east") ??
+    data?.waits.find((w) => w.laneType === "pedestrian");
+  const pedWest = data?.waits.find((w) => w.laneType === "pedwest");
   const sentri = data?.waits.find((w) => w.laneType === "sentri_ready");
 
   return (
@@ -86,7 +89,8 @@ export default function QuickCheckPage() {
                 official={sentri?.officialMinutes}
                 predicted={sentri?.predictedTrueMinutes}
               />
-              <LaneRow label="Pedestrian" official={ped?.officialMinutes} predicted={ped?.predictedTrueMinutes} />
+              <LaneRow label="Pedestrian East" official={pedEast?.officialMinutes} predicted={pedEast?.predictedTrueMinutes} />
+              <LaneRow label="PedWest" official={pedWest?.officialMinutes} predicted={pedWest?.predictedTrueMinutes} />
             </div>
             <div className="mt-3">
               <LiveMetaStrip meta={car.live} />

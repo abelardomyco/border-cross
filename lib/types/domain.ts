@@ -3,7 +3,14 @@
  * Live connectors (CBP wait feeds, cameras, traffic) normalize into these shapes.
  */
 
-export type LaneType = "car" | "pedestrian" | "sentri_ready" | "commercial";
+export type LaneType =
+  | "car"
+  | "sentri_ready"
+  | "commercial"
+  | "pedestrian_east"
+  | "pedwest"
+  /** Back-compat: some ports still use a single pedestrian channel */
+  | "pedestrian";
 
 export type FreshnessLabel = "live" | "recent" | "stale" | "unknown";
 
@@ -174,7 +181,12 @@ export interface RegionalOverview {
     lanes: {
       general: { official: number | null; predicted: number };
       sentri_ready: { official: number | null; predicted: number } | null;
-      pedestrian: { official: number | null; predicted: number } | null;
+      pedestrian:
+        | {
+            east: { official: number | null; predicted: number } | null;
+            west: { official: number | null; predicted: number } | null;
+          }
+        | null;
     };
     freshness: FreshnessLabel;
     confidence: number;

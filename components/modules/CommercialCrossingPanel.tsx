@@ -1,6 +1,7 @@
 import type { CommercialSnapshot } from "@/lib/types/domain";
 import { DenseCard } from "./DenseCard";
 import { LiveMetaStrip } from "./LiveMetaStrip";
+import { waitSeverity, waitSeverityTextClass } from "@/lib/ui/portLighting";
 
 export function CommercialCrossingPanel({ commercial }: { commercial: CommercialSnapshot }) {
   return (
@@ -14,7 +15,11 @@ export function CommercialCrossingPanel({ commercial }: { commercial: Commercial
         <div className="grid grid-cols-2 gap-2">
           <div className="rounded border border-zinc-800/70 bg-black/20 p-1.5">
             <div className="text-[10px] text-zinc-500">Drayage delay (empty)</div>
-            <div className="mt-1 font-mono text-lg text-zinc-50">
+            <div
+              className={`mt-1 font-mono text-lg ${waitSeverityTextClass(
+                waitSeverity(commercial.drayageDelayMinutes),
+              )}`}
+            >
               {commercial.drayageDelayMinutes == null ? "—" : `${commercial.drayageDelayMinutes}m`}
             </div>
           </div>
