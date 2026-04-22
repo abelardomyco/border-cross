@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "U.S.–Mexico port dashboard template",
+  "description": "Copy this structure when adding a new land port. Wire slug to /ports/[slug] and add a seed row in data/mock/ports-seed.json.",
+  "type": "object",
+  "required": ["slug", "name", "layout", "baseWaits", "trendCar", "trendPed", "cameras", "queuePressure", "approach", "hourlyProfile", "dowBias", "bestWindows", "alerts", "commercial"],
+  "properties": {
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "name": { "type": "string" },
+    "layout": {
+      "type": "object",
+      "required": ["variant", "moduleOrder", "laneTypes"],
+      "properties": {
+        "variant": { "type": "string" },
+        "moduleOrder": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "alerts",
+              "official_wait",
+              "predicted_wait",
+              "open_lanes",
+              "trend",
+              "heatmap",
+              "best_time",
+              "queue",
+              "approach",
+              "cameras",
+              "commercial",
+              "ads_rail",
+              "ads_footer"
+            ]
+          }
+        },
+        "laneTypes": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["car", "pedestrian", "sentri_ready", "commercial"] }
+        }
+      }
+    },
+    "baseWaits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["laneType", "label", "official", "open", "total"],
+        "properties": {
+          "laneType": { "type": "string" },
+          "label": { "type": "string" },
+          "official": { "type": "number" },
+          "open": { "type": "number" },
+          "total": { "type": "number" }
+        }
+      }
+    },
+    "trendCar": { "type": "array", "items": { "type": "number" }, "minItems": 8 },
+    "trendPed": { "type": "array", "items": { "type": "number" }, "minItems": 8 },
+    "cameras": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "laneHint": { "type": "string" }
+        }
+      }
+    },
+    "queuePressure": { "type": "object", "additionalProperties": { "type": "number" } },
+    "approach": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "congestion", "delay"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "congestion": { "type": "number" },
+          "delay": { "type": "number" }
+        }
+      }
+    },
+    "hourlyProfile": { "type": "array", "items": { "type": "number" }, "minItems": 24, "maxItems": 24 },
+    "dowBias": { "type": "array", "items": { "type": "number" }, "minItems": 7, "maxItems": 7 },
+    "bestWindows": { "type": "array" },
+    "alerts": { "type": "array" },
+    "commercial": { "type": "object" }
+  }
+}

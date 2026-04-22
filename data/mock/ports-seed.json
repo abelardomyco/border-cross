@@ -1,0 +1,311 @@
+{
+  "corridor": "San Diego – Tijuana mega-region",
+  "ports": [
+    {
+      "slug": "san-ysidro",
+      "name": "San Ysidro (I-5 / PedWest)",
+      "layout": {
+        "variant": "mega_primary",
+        "moduleOrder": [
+          "alerts",
+          "official_wait",
+          "predicted_wait",
+          "open_lanes",
+          "trend",
+          "heatmap",
+          "best_time",
+          "queue",
+          "approach",
+          "video_flow",
+          "cameras",
+          "commercial",
+          "ads_rail",
+          "ads_footer"
+        ],
+        "laneTypes": ["car", "pedestrian", "sentri_ready"]
+      },
+      "baseWaits": [
+        {
+          "laneType": "car",
+          "label": "POV general (I-5 northbound)",
+          "official": 92,
+          "open": 20,
+          "total": 32
+        },
+        {
+          "laneType": "pedestrian",
+          "label": "PedWest / east pedestrian",
+          "official": 38,
+          "open": 9,
+          "total": 14
+        },
+        {
+          "laneType": "sentri_ready",
+          "label": "SENTRI / Ready",
+          "official": 11,
+          "open": 4,
+          "total": 5
+        }
+      ],
+      "trendCar": [78, 80, 83, 86, 88, 90, 91, 93, 94, 95, 94, 92],
+      "trendPed": [30, 31, 32, 33, 35, 36, 37, 38, 39, 40, 39, 38],
+      "cameras": [
+        { "id": "sys-n", "title": "Approach — I-5 north stitch", "laneHint": "car" },
+        { "id": "pedwest", "title": "PedWest canopy density", "laneHint": "pedestrian" }
+      ],
+      "queuePressure": { "car": 78, "pedestrian": 62, "sentri_ready": 34 },
+      "approach": [
+        { "id": "i5-sd", "name": "I-5 (San Ysidro village)", "congestion": 72, "delay": 14 },
+        { "id": "camino-real", "name": "Camino de la Plaza weave", "congestion": 58, "delay": 7 }
+      ],
+      "hourlyProfile": [42, 38, 35, 33, 36, 48, 62, 74, 78, 72, 68, 66, 64, 63, 65, 70, 76, 82, 80, 74, 68, 60, 52, 46],
+      "dowBias": [1.05, 1.02, 1.0, 1.0, 1.03, 1.12, 1.18],
+      "bestWindows": [
+        { "startLocal": "02:00", "endLocal": "04:30", "score": 0.86, "reason": "Low freight + reduced tourist POV" },
+        { "startLocal": "10:30", "endLocal": "12:00", "score": 0.62, "reason": "Mid-morning lull before lunch peak" }
+      ],
+      "alerts": [
+        {
+          "id": "lane-shift",
+          "severity": "warn",
+          "title": "Lane shift (mock)",
+          "body": "Lanes 12–14 closed for barrier maintenance — expect weave delays.",
+          "validUntil": "2026-04-22T08:00:00-07:00"
+        }
+      ],
+      "commercial": {
+        "enabled": false,
+        "drayage": null,
+        "openLanes": null,
+        "iph": null,
+        "notes": "Commercial POV not primary at San Ysidro — route heavy trucks to Otay Mesa East."
+      }
+    },
+    {
+      "slug": "otay-mesa",
+      "name": "Otay Mesa (SR-905)",
+      "layout": {
+        "variant": "commercial_heavy",
+        "moduleOrder": [
+          "alerts",
+          "commercial",
+          "official_wait",
+          "predicted_wait",
+          "open_lanes",
+          "trend",
+          "heatmap",
+          "best_time",
+          "queue",
+          "approach",
+          "video_flow",
+          "cameras",
+          "ads_rail",
+          "ads_footer"
+        ],
+        "laneTypes": ["car", "pedestrian", "sentri_ready", "commercial"]
+      },
+      "baseWaits": [
+        { "laneType": "car", "label": "POV general", "official": 68, "open": 14, "total": 22 },
+        { "laneType": "pedestrian", "label": "Pedestrian", "official": 22, "open": 6, "total": 8 },
+        { "laneType": "sentri_ready", "label": "SENTRI / Ready", "official": 9, "open": 5, "total": 6 },
+        { "laneType": "commercial", "label": "Commercial (empty)", "official": 142, "open": 5, "total": 10 }
+      ],
+      "trendCar": [55, 57, 60, 62, 64, 65, 66, 67, 68, 69, 68, 68],
+      "trendPed": [18, 19, 20, 21, 21, 22, 22, 23, 23, 22, 22, 22],
+      "cameras": [
+        { "id": "otay-905", "title": "SR-905 queue tail", "laneHint": "car" },
+        { "id": "otay-com", "title": "Commercial inspection plaza", "laneHint": "commercial" }
+      ],
+      "queuePressure": { "car": 64, "pedestrian": 44, "sentri_ready": 30, "commercial": 88 },
+      "approach": [
+        { "id": "sr905", "name": "SR-905 eastbound weave", "congestion": 66, "delay": 11 },
+        { "id": "sierra", "name": "Sierra Rd merge", "congestion": 52, "delay": 6 }
+      ],
+      "hourlyProfile": [36, 34, 32, 30, 34, 46, 58, 66, 70, 68, 64, 62, 60, 58, 60, 64, 70, 74, 72, 66, 58, 50, 44, 40],
+      "dowBias": [1.04, 1.0, 0.98, 1.0, 1.05, 1.14, 1.2],
+      "bestWindows": [
+        { "startLocal": "01:00", "endLocal": "04:00", "score": 0.9, "reason": "Low commercial dispatch + thin POV" },
+        { "startLocal": "13:30", "endLocal": "15:00", "score": 0.58, "reason": "Post-lunch freight lull (variable)" }
+      ],
+      "alerts": [
+        {
+          "id": "xray",
+          "severity": "info",
+          "title": "Secondary screening (mock)",
+          "body": "Random commercial secondary — +25–40m for flagged manifests.",
+          "validUntil": "2026-04-21T18:00:00-07:00"
+        }
+      ],
+      "commercial": {
+        "enabled": true,
+        "drayage": 142,
+        "openLanes": 5,
+        "iph": 38,
+        "notes": "Heavy drayage corridor — predicted true wait includes manifest risk fudge."
+      }
+    },
+    {
+      "slug": "tecate",
+      "name": "Tecate",
+      "layout": {
+        "variant": "two_lane_town",
+        "moduleOrder": [
+          "alerts",
+          "official_wait",
+          "predicted_wait",
+          "open_lanes",
+          "trend",
+          "heatmap",
+          "best_time",
+          "queue",
+          "approach",
+          "video_flow",
+          "cameras",
+          "commercial",
+          "ads_footer"
+        ],
+        "laneTypes": ["car", "pedestrian", "sentri_ready"]
+      },
+      "baseWaits": [
+        { "laneType": "car", "label": "POV general", "official": 48, "open": 5, "total": 8 },
+        { "laneType": "pedestrian", "label": "Pedestrian", "official": 15, "open": 2, "total": 3 },
+        { "laneType": "sentri_ready", "label": "SENTRI / Ready", "official": 7, "open": 2, "total": 3 }
+      ],
+      "trendCar": [40, 41, 42, 44, 45, 46, 47, 48, 49, 48, 48, 48],
+      "trendPed": [12, 12, 13, 13, 14, 14, 15, 15, 16, 15, 15, 15],
+      "cameras": [
+        { "id": "tec-main", "title": "Ave Internacional approach", "laneHint": "car" }
+      ],
+      "queuePressure": { "car": 52, "pedestrian": 28, "sentri_ready": 22 },
+      "approach": [
+        { "id": "tec-town", "name": "Tecate town arterials", "congestion": 38, "delay": 4 }
+      ],
+      "hourlyProfile": [28, 26, 24, 22, 24, 32, 40, 46, 48, 46, 44, 42, 40, 38, 40, 44, 48, 50, 48, 42, 36, 32, 30, 29],
+      "dowBias": [1.0, 1.0, 0.98, 1.0, 1.02, 1.08, 1.1],
+      "bestWindows": [
+        { "startLocal": "06:00", "endLocal": "08:00", "score": 0.72, "reason": "Early POV before winery/tourism buses" }
+      ],
+      "alerts": [],
+      "commercial": {
+        "enabled": false,
+        "drayage": null,
+        "openLanes": null,
+        "iph": null,
+        "notes": "Limited commercial window — treat truck signal as advisory only in mock."
+      }
+    },
+    {
+      "slug": "calexico-west",
+      "name": "Calexico West",
+      "layout": {
+        "variant": "imperial_urban",
+        "moduleOrder": [
+          "alerts",
+          "official_wait",
+          "predicted_wait",
+          "open_lanes",
+          "trend",
+          "heatmap",
+          "best_time",
+          "queue",
+          "approach",
+          "video_flow",
+          "cameras",
+          "commercial",
+          "ads_rail",
+          "ads_footer"
+        ],
+        "laneTypes": ["car", "pedestrian", "sentri_ready", "commercial"]
+      },
+      "baseWaits": [
+        { "laneType": "car", "label": "POV general", "official": 55, "open": 8, "total": 12 },
+        { "laneType": "pedestrian", "label": "Pedestrian", "official": 20, "open": 4, "total": 6 },
+        { "laneType": "sentri_ready", "label": "SENTRI / Ready", "official": 8, "open": 3, "total": 4 },
+        { "laneType": "commercial", "label": "Commercial (empty)", "official": 88, "open": 3, "total": 6 }
+      ],
+      "trendCar": [44, 46, 48, 50, 52, 53, 54, 55, 56, 55, 55, 55],
+      "trendPed": [16, 17, 17, 18, 19, 19, 20, 20, 21, 20, 20, 20],
+      "cameras": [
+        { "id": "cw-1", "title": "Mexicali Ave merge", "laneHint": "car" },
+        { "id": "cw-ped", "title": "Pedestrian queue canopy", "laneHint": "pedestrian" }
+      ],
+      "queuePressure": { "car": 58, "pedestrian": 46, "sentri_ready": 26, "commercial": 62 },
+      "approach": [
+        { "id": "imperial", "name": "Imperial Ave / downtown weave", "congestion": 48, "delay": 6 }
+      ],
+      "hourlyProfile": [30, 28, 26, 25, 28, 38, 50, 58, 60, 58, 56, 54, 52, 50, 52, 56, 60, 62, 58, 52, 46, 40, 35, 32],
+      "dowBias": [1.02, 1.0, 1.0, 1.0, 1.03, 1.08, 1.12],
+      "bestWindows": [
+        { "startLocal": "04:00", "endLocal": "06:30", "score": 0.8, "reason": "Thin retail traffic before shift change" }
+      ],
+      "alerts": [],
+      "commercial": {
+        "enabled": true,
+        "drayage": 88,
+        "openLanes": 3,
+        "iph": 22,
+        "notes": "Commercial empty lane sensitive to ag inspections — mock uncertainty elevated."
+      }
+    },
+    {
+      "slug": "calexico-east",
+      "name": "Calexico East (New River)",
+      "layout": {
+        "variant": "imperial_east_freight",
+        "moduleOrder": [
+          "alerts",
+          "commercial",
+          "official_wait",
+          "predicted_wait",
+          "open_lanes",
+          "trend",
+          "heatmap",
+          "best_time",
+          "queue",
+          "approach",
+          "video_flow",
+          "cameras",
+          "ads_footer"
+        ],
+        "laneTypes": ["car", "pedestrian", "sentri_ready", "commercial"]
+      },
+      "baseWaits": [
+        { "laneType": "car", "label": "POV general", "official": 42, "open": 7, "total": 10 },
+        { "laneType": "pedestrian", "label": "Pedestrian", "official": 18, "open": 3, "total": 4 },
+        { "laneType": "sentri_ready", "label": "SENTRI / Ready", "official": 6, "open": 2, "total": 3 },
+        { "laneType": "commercial", "label": "Commercial (empty)", "official": 118, "open": 6, "total": 12 }
+      ],
+      "trendCar": [36, 37, 38, 39, 40, 41, 41, 42, 43, 42, 42, 42],
+      "trendPed": [14, 15, 15, 16, 16, 17, 17, 18, 18, 18, 18, 18],
+      "cameras": [
+        { "id": "ce-fwy", "title": "SR-7 / SR-111 approach", "laneHint": "commercial" }
+      ],
+      "queuePressure": { "car": 48, "pedestrian": 40, "sentri_ready": 24, "commercial": 90 },
+      "approach": [
+        { "id": "sr7", "name": "SR-7 queue tail", "congestion": 62, "delay": 9 },
+        { "id": "new-river", "name": "New River bridge weave", "congestion": 44, "delay": 5 }
+      ],
+      "hourlyProfile": [32, 30, 28, 27, 30, 40, 52, 60, 62, 60, 58, 56, 54, 52, 54, 58, 64, 66, 62, 54, 46, 40, 36, 34],
+      "dowBias": [1.03, 1.0, 0.99, 1.0, 1.04, 1.1, 1.15],
+      "bestWindows": [
+        { "startLocal": "02:30", "endLocal": "05:00", "score": 0.88, "reason": "Freight wave trough (still variable)" }
+      ],
+      "alerts": [
+        {
+          "id": "wind",
+          "severity": "info",
+          "title": "Dust advisory (mock)",
+          "body": "Reduced visibility on SR-7 approach — minor speed harmonization delays.",
+          "validUntil": "2026-04-20T20:00:00-07:00"
+        }
+      ],
+      "commercial": {
+        "enabled": true,
+        "drayage": 118,
+        "openLanes": 6,
+        "iph": 31,
+        "notes": "Primary Imperial Valley truck crossing in mock profile."
+      }
+    }
+  ]
+}
